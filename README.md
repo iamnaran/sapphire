@@ -1,4 +1,4 @@
-# Welcome to Expo React Native App Sapphire App 🚀
+# Welcome to Expo React Native --> Sapphire App 🚀
 👋
 A React Native mobile app built with Expo, featuring scalable architecture, offline-first data storage, and modern styling with NativeWind.
 
