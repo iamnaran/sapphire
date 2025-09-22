@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { setAuthToken } from "../../api/apiClient";
-import { loginApi, logoutApi } from "../../services/authServices";
+import { loginApi, logoutApi } from "@/src/api/services/authServices";
 import {AuthState} from "@/src/store/auth/authState";
 import {LoginRequest} from "@/src/model/auth/loginRequest";
 import {deleteTokens, saveToken} from "@/src/store/secure/secureStore";
@@ -14,14 +14,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     error: null,
 
     // actions reference external helper functions
-    login: (payload) => loginAction(set, payload),
-    logout: () => logoutAction(set),
+    loginAction: (payload) => performLogin(set, payload),
+    logoutAction: () => performLogout(set),
 }));
 
-export const loginAction = async (set: any, payload: LoginRequest) => {
+export const performLogin = async (set: any, payload: LoginRequest) => {
     set({ isLoading: true, error: null });
     try {
         const authResponse = await loginApi(payload);
+
+        console.log(authResponse);
 
         await saveToken(authResponse.accessToken, authResponse.refreshToken);
 
@@ -40,7 +42,7 @@ export const loginAction = async (set: any, payload: LoginRequest) => {
 };
 
 // Logout action
-export const logoutAction = async (set: any) => {
+export const performLogout = async (set: any) => {
     try {
         await logoutApi();
     } catch {

@@ -1,34 +1,18 @@
-import { useAuthStore } from "@/src/store/auth/authStore";
-import { Slot, useRouter } from "expo-router";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { View, ActivityIndicator, Text } from "react-native";
 import { useEffect } from "react";
+import { useRouter } from "expo-router";
+import { ROUTES } from "@/src/routes/routes";
+import { isUserLoggedIn } from "@/src/store/secure/secureStore";
 
-export default function RootLayout() {
-    const { accessToken, isLoggedIn } = useAuthStore();
+export default function Index() {
     const router = useRouter();
 
-    // Redirect after loading
     useEffect(() => {
-        if (isLoggedIn) {
-             router.replace("/(auth)/login");
-        }else router.replace("/(tabs)/home");
-    }, [accessToken, isLoggedIn, router]);
+        const checkAuth = async () => {
+            const loggedIn = await isUserLoggedIn();
+            router.replace(loggedIn ? ROUTES.TABS.HOME : ROUTES.AUTH.LOGIN);
+        };
+        void checkAuth();
+    }, [router]);
 
-    if (isLoggedIn) {
-        return (
-            <SafeAreaProvider>
-                <View className="flex-1 justify-center items-center bg-white">
-                    <ActivityIndicator size="large" color="#2563EB" />
-                    <Text className="mt-4 text-gray-600">Loading...</Text>
-                </View>
-            </SafeAreaProvider>
-        );
-    }
-
-    return (
-        <SafeAreaProvider>
-            <Slot /> {/* Only render the Slot after hydration */}
-        </SafeAreaProvider>
-    );
+    return null; // just redirect, no UI
 }

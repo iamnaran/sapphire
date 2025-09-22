@@ -1,4 +1,4 @@
-import apiClient from "../api/apiClient";
+import apiClient from "../apiClient";
 import {AuthResponse} from "@/src/model/auth/authResponse";
 import {LoginRequest} from "@/src/model/auth/loginRequest";
 

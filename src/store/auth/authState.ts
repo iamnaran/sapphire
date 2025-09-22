@@ -8,6 +8,6 @@ export interface AuthState {
     isLoading: boolean;
     error: string | null;
 
-    login: (payload: LoginRequest) => Promise<void>;
-    logout: () => Promise<void>;
+    loginAction: (payload: LoginRequest) => Promise<void>;
+    logoutAction: () => Promise<void>;
 }
