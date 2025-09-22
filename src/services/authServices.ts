@@ -1,20 +1,8 @@
 import apiClient from "../api/apiClient";
+import {AuthResponse} from "@/src/model/auth/authResponse";
+import {LoginRequest} from "@/src/model/auth/loginRequest";
 
-export interface LoginDTO {
-  email: string;
-  password: string;
-}
-
-export interface AuthResponse {
-  token: string;
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
-}
-
-export async function loginApi(payload: LoginDTO): Promise<AuthResponse> {
+export async function loginApi(payload: LoginRequest): Promise<AuthResponse> {
   const { data } = await apiClient.post<AuthResponse>("/auth/login", payload);
   return data;
 }

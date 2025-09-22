@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/src/store/authStore";
+import { useAuthStore } from "@/src/store/auth/authStore";
 import { View, Text, Button } from "react-native";
 
 export default function Profile() {
