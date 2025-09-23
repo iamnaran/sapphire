@@ -1,18 +1,26 @@
 import {useAuthStore} from "@/src/store/auth/authStore";
-import {useEffect, useState} from "react";
-import {Animated, Pressable, Text, Image, TextInput, View, Alert, ImageBackground} from "react-native";
+import {useEffect, useRef, useState} from "react";
+import {
+    Animated,
+    Text,
+    Image,
+    TextInput,
+    View,
+    Alert,
+    ImageBackground
+} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import '../global.css';
 import ScrollView = Animated.ScrollView;
 import {router, useRouter} from "expo-router";
-import {ROUTES} from "@/src/routes/routes";
-import {isUserLoggedIn} from "@/src/store/secure/secureStore";
+import LoginButton from "@/src/components/loginButton";
 
 export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+    const passwordRef = useRef<TextInput>(null);
 
     const login = useAuthStore((state) => state.loginAction);
     const error = useAuthStore((state) => state.error);
@@ -31,6 +39,7 @@ export default function Login() {
             );
             return;
         }
+        console.log(email,password);
         await login({email, password});
     };
 
@@ -50,13 +59,12 @@ export default function Login() {
             resizeMode="cover">
 
             <SafeAreaView className="flex-1  bg-transparent">
-
                 <ScrollView>
 
                     <View className="flex-1 justify-center items-center mt-16 mx-6 my-4 px-6">
                         <Image
                             source={require("../../assets/images/icon.png")} // local image
-                            style={{width: 150, height: 150}}
+                            style={{width: 120, height: 120}}
                             resizeMode="contain"
                         />
 
@@ -70,30 +78,49 @@ export default function Login() {
                             placeholder="Username"
                             value={email}
                             onChangeText={setEmail}
+                            keyboardType="email-address"
+                            textContentType={"emailAddress"}
+                            returnKeyType="next"
+                            onSubmitEditing={() => passwordRef.current?.focus()}
                             className="w-full border border-gray-300 rounded-lg p-3 mb-4 text-gray-800 px-5 py-5"
                         />
 
                         <Text className="w-full font-medium rounded-lg mb-4 text-gray-600 pt-3">Password</Text>
                         <TextInput
+                            ref={passwordRef}
                             placeholder="Password"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry
-                            className="w-full border border-gray-300 rounded-lg p-3 mb-4 text-gray-800 px-5 py-5"
+                            placeholderTextColor={"gray-100"}
+                            textContentType={"password"}
+                            returnKeyType="done"
+                            onSubmitEditing={handleLogin}
+                            className="w-full border border-gray-300 rounded-lg p-3 mb-4 text-gray-600 px-5 py-5"
                         />
+                        <View className="h-10">
+                            {error && (
+                                <Text className="text-red-500 mb-4 text-center">{error}</Text>
+                            )}
+                        </View>
 
-                        {error && (
-                            <Text className="text-red-500 mb-4 text-center">{error}</Text>
-                        )}
 
-                        <Pressable
-                            className="w-full bg-blue-500 py-3 rounded-lg mt-2"
+                        {/*<Pressable*/}
+                        {/*    className="w-full bg-blue-500 py-3 rounded-lg mt-2"*/}
+                        {/*    onPress={handleLogin}>*/}
+                        {/*    <Text className="text-white text-center font-semibold text-lg">*/}
+                        {/*        Login*/}
+                        {/*    </Text>*/}
+                        {/*</Pressable>*/}
+
+                        <LoginButton
+                            loading={isLoading}
                             onPress={handleLogin}
-                        >
-                            <Text className="text-white text-center font-semibold text-lg">
-                                Login
-                            </Text>
-                        </Pressable>
+                            disabled={isLoggedIn}
+
+                            text='Login'>
+
+                        </LoginButton>
                     </View>
                 </ScrollView>
             </SafeAreaView>
