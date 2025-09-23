@@ -1,5 +1,4 @@
 import axios from "axios";
-import {useAuthStore} from "../store/auth/authStore";
 
 const apiClient = axios.create({
     baseURL: "https://dummyjson.com",
