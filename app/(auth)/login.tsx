@@ -105,15 +105,6 @@ export default function Login() {
                             )}
                         </View>
 
-
-                        {/*<Pressable*/}
-                        {/*    className="w-full bg-blue-500 py-3 rounded-lg mt-2"*/}
-                        {/*    onPress={handleLogin}>*/}
-                        {/*    <Text className="text-white text-center font-semibold text-lg">*/}
-                        {/*        Login*/}
-                        {/*    </Text>*/}
-                        {/*</Pressable>*/}
-
                         <LoginButton
                             loading={isLoading}
                             onPress={handleLogin}
