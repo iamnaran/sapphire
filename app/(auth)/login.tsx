@@ -17,7 +17,7 @@ import LoginButton from "@/src/components/loginButton";
 
 export default function Login() {
 
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
     const passwordRef = useRef<TextInput>(null);
@@ -28,7 +28,7 @@ export default function Login() {
     const isLoading = useAuthStore((state) => state.isLoading);
 
     const handleLogin = async () => {
-        if (!email || !password) {
+        if (!username || !password) {
             Alert.alert(
                 "Enter Valid Credential",
                 "Please enter your email and password.",
@@ -39,12 +39,13 @@ export default function Login() {
             );
             return;
         }
-        console.log(email,password);
-        await login({email, password});
+        console.log(username,password);
+        await login({username, password});
     };
 
     useEffect(() => {
         if (isLoggedIn) {
+
             router.replace("/(tabs)/home");
         }
     }, [isLoggedIn, router]);
@@ -76,8 +77,8 @@ export default function Login() {
 
                         <TextInput
                             placeholder="Username"
-                            value={email}
-                            onChangeText={setEmail}
+                            value={username}
+                            onChangeText={setUsername}
                             keyboardType="email-address"
                             textContentType={"emailAddress"}
                             returnKeyType="next"
@@ -117,7 +118,6 @@ export default function Login() {
                             loading={isLoading}
                             onPress={handleLogin}
                             disabled={isLoggedIn}
-
                             text='Login'>
 
                         </LoginButton>

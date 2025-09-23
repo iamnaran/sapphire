@@ -22,19 +22,15 @@ export const performLogin = async (set: any, payload: LoginRequest) => {
     set({ isLoading: true, error: null });
     try {
         const authResponse = await loginApi(payload);
-
-        console.log(authResponse);
-
-        await saveToken(authResponse.accessToken, authResponse.refreshToken);
-
-        setAuthToken(authResponse.accessToken);
-
         set({
             authResponse,
             accessToken: authResponse.accessToken,
             isLoggedIn: true,
             isLoading: false,
         });
+        setAuthToken(authResponse.accessToken);
+        await saveToken(authResponse.accessToken, authResponse.refreshToken);
+
 
     } catch (err: any) {
         set({ error: err.message || "Login failed", isLoading: false });
@@ -55,6 +51,7 @@ export const performLogout = async (set: any) => {
         authResponse: null,
         accessToken: null,
         isLoggedIn: false,
+        isLoading: false,
         error: null,
     });
 };

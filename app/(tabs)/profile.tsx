@@ -1,13 +1,20 @@
 import { useAuthStore } from "@/src/store/auth/authStore";
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
+import { useRouter } from "expo-router";
+import { ROUTES } from "@/src/routes/routes";
 
 export default function Profile() {
-  const { user, logout } = useAuthStore();
+    const { logoutAction } = useAuthStore();
+    const router = useRouter();
 
-  return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-xl">👤 {user?.name}</Text>
-      <Button title="Logout" onPress={logout} />
-    </View>
-  );
+    const handleLogout = async () => {
+        await logoutAction();
+        router.replace(ROUTES.AUTH.LOGIN);
+    };
+
+    return (
+        <View className="flex-1 items-center justify-center">
+            <Button title="Logout" onPress={handleLogout} />
+        </View>
+    );
 }
