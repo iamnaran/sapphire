@@ -38,6 +38,12 @@ yarn-error.*
 
 app-example
 
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
 # generated native folders
 /ios
 /android
