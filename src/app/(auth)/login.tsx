@@ -53,7 +53,7 @@ export default function Login() {
     return (
 
         <ImageBackground
-            source={require("../../assets/images/background-login.png")} // background image
+            source={require("../../../assets/images/background-login.png")} // background image
             style={{flex: 1}}
             className={"flex-1 w-full h-full"}
             resizeMode="cover">
@@ -63,7 +63,7 @@ export default function Login() {
 
                     <View className="flex-1 justify-center items-center mt-16 mx-6 my-4 px-6">
                         <Image
-                            source={require("../../assets/images/icon.png")} // local image
+                            source={require("../../../assets/images/icon.png")} // local image
                             style={{width: 120, height: 120}}
                             resizeMode="contain"
                         />
