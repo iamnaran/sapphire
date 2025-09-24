@@ -2,7 +2,7 @@
 import { Model } from "@nozbe/watermelondb";
 import { field, json } from "@nozbe/watermelondb/decorators";
 
-export class ProductModel extends Model {
+export class ProductEntity extends Model {
     static table = "products";
 
     @field("title") title!: string;

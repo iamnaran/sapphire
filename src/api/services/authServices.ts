@@ -1,6 +1,6 @@
 import apiClient from "../apiClient";
-import {AuthResponse} from "@/src/model/auth/authResponse";
-import {LoginRequest} from "@/src/model/auth/loginRequest";
+import {AuthResponse} from "@/src/data/model/auth/authResponse";
+import {LoginRequest} from "@/src/data/model/auth/loginRequest";
 
 export async function loginApi(payload: LoginRequest): Promise<AuthResponse> {
   const { data } = await apiClient.post<AuthResponse>("/auth/login", payload);

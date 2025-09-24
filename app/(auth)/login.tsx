@@ -10,9 +10,8 @@ import {
     ImageBackground
 } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import '../global.css';
 import ScrollView = Animated.ScrollView;
-import {router, useRouter} from "expo-router";
+import {useRouter} from "expo-router";
 import LoginButton from "@/src/components/loginButton";
 
 export default function Login() {

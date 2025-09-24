@@ -1,7 +1,7 @@
 import { Database, appSchema } from "@nozbe/watermelondb";
 import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
-import { ProductModel } from "@/src/db/entities/product/productEntity";
-import { productSchema } from "@/src/db/entities/product/productSchema";
+import { ProductEntity } from "@/src/data/entities/product/productEntity";
+import { productSchema } from "@/src/data/entities/product/productSchema";
 
 let _database: Database | null = null;
 
@@ -17,7 +17,7 @@ export const getDatabase = (): Database => {
 
     _database = new Database({
         adapter,
-        modelClasses: [ProductModel],
+        modelClasses: [ProductEntity],
     });
 
     return _database;

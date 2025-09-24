@@ -1,5 +1,5 @@
-import {AuthResponse} from "@/src/model/auth/authResponse";
-import {LoginRequest} from "@/src/model/auth/loginRequest";
+import {AuthResponse} from "@/src/data/model/auth/authResponse";
+import {LoginRequest} from "@/src/data/model/auth/loginRequest";
 
 export interface AuthState {
     authResponse: AuthResponse | null;

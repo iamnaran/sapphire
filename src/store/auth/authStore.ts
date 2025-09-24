@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { setAuthToken } from "../../api/apiClient";
 import { loginApi, logoutApi } from "@/src/api/services/authServices";
 import {AuthState} from "@/src/store/auth/authState";
-import {LoginRequest} from "@/src/model/auth/loginRequest";
+import {LoginRequest} from "@/src/data/model/auth/loginRequest";
 import {deleteTokens, saveToken} from "@/src/store/secure/secureStore";
 
 
@@ -10,7 +10,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     authResponse: null,
     accessToken: null,
     isLoggedIn: false,
-    isLoading: true,
+    isLoading: false,
     error: null,
 
     // actions reference external helper functions
@@ -41,10 +41,10 @@ export const performLogin = async (set: any, payload: LoginRequest) => {
 export const performLogout = async (set: any) => {
     try {
         await logoutApi();
+        await deleteTokens();
     } catch {
         // ignore errors
     }
-    await deleteTokens();
 
     setAuthToken(null);
     set({

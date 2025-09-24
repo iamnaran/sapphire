@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { ROUTES } from "@/src/routes/routes";
 import { isUserLoggedIn } from "@/src/store/secure/secureStore";
+import './global.css'
 
 export default function Index() {
     const router = useRouter();
