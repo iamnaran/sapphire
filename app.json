@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.iamnaran.sapphire"
+      "bundleIdentifier": "com.iamnaran.sapphire",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -42,18 +45,24 @@
         }
       ],
       "expo-secure-store",
-      ["expo-build-properties", {
-        "ios": {
-          "extraPods": [
-            {
-              "name": "simdjson",
-              "configurations": ["Debug", "Release"],
-              "path": "../node_modules/@nozbe/simdjson",
-              "modular_headers": true
-            }
-          ]
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "extraPods": [
+              {
+                "name": "simdjson",
+                "configurations": [
+                  "Debug",
+                  "Release"
+                ],
+                "path": "../node_modules/@nozbe/simdjson",
+                "modular_headers": true
+              }
+            ]
+          }
         }
-      }]
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
