@@ -1,31 +1,25 @@
-import {getDatabase} from "@/src/data/dbManager";
-import {ProductEntity} from "@/src/data/entities/product/productEntity";
+import {ProductEntity} from "@/src/data/db/entities/product/productEntity";
 import {ProductDTO} from "@/src/data/model/product/productDTO";
-import {fetchProducts} from "@/src/api/services/productServices";
+import {fetchProducts} from "@/src/data/api/services/productServices";
 import {mapProductsToDTO, mapToProductEntity} from "@/src/data/model/product/productMapper";
+import appDatabase from "@/src/data/db/appDbManager";
 
-
-export const observeProducts = () => {
-    const db = getDatabase();
-    return db.get<ProductEntity>("products").query().observe();
-};
 
 export const upsertProducts = async (products: ProductDTO[]) => {
-    const db = getDatabase();
+    const db = appDatabase;
     const collection = db.get<ProductEntity>("products");
 
     await db.write(async () => {
         await Promise.all(
-            products.map(async (p) => {
-                const existing = await collection.find(p.id.toString()).catch(() => null);
+            products.map(async (dto) => {
+                const existing = await collection.find(dto.id.toString()).catch(() => null);
+
                 if (existing) {
-                    await existing.update((prod) => {
-                        mapToProductEntity(prod, p);
-                    });
+                    await existing.update((prod) => mapToProductEntity(prod, dto));
                 } else {
                     await collection.create((prod) => {
-                        prod._raw.id = `${p.id}`;
-                        mapToProductEntity(prod, p);
+                        prod._raw.id = `${dto.id}`;
+                        mapToProductEntity(prod, dto);
                     });
                 }
             })
@@ -34,9 +28,40 @@ export const upsertProducts = async (products: ProductDTO[]) => {
 };
 
 /**
+ * Get all products from local DB
+ */
+export const getLocalProducts = async (): Promise<ProductDTO[]> => {
+    const collection = appDatabase.get<ProductEntity>("products");
+    const allProducts = await collection.query().fetch();
+
+    return allProducts.map((p) => ({
+        id: Number(p.id),
+        title: p.title || "",
+        description: p.description || "",
+        category: p.category || "",
+        price: p.price || 0,
+        rating: p.rating || 0,
+        brand: p.brand || "",
+        thumbnail: p.thumbnail || "",
+    }));
+};
+
+
+
+/**
  * Fetch products from API and sync with DB
  */
 export const syncProducts = async () => {
-    const response = await fetchProducts();
-    await upsertProducts(mapProductsToDTO(response.products) ?? []);
+    try {
+        const response = await fetchProducts();
+        const mappedResponse = mapProductsToDTO(response.products) ?? [];
+        await upsertProducts(mappedResponse);
+    } catch (err) {
+        console.error("Failed to sync products:", err);
+    }
+};
+
+
+export const observeProducts = () => {
+    return appDatabase.get<ProductEntity>("products").query().observe();
 };

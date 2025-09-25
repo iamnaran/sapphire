@@ -1,6 +1,6 @@
 import {Product} from "@/src/data/model/product/product";
 import {ProductDTO} from "@/src/data/model/product/productDTO";
-import {ProductEntity} from "@/src/data/entities/product/productEntity";
+import {ProductEntity} from "@/src/data/db/entities/product/productEntity";
 
 export const mapProductToDTO = (product: Product): ProductDTO => ({
     id: product.id,
@@ -11,7 +11,6 @@ export const mapProductToDTO = (product: Product): ProductDTO => ({
     rating: product.rating ?? 0,
     brand: product.brand ?? "",
     thumbnail: product.thumbnail ?? "",
-    images: product.images ?? [],
 });
 
 export const mapToProductEntity = (entity: ProductEntity, dto: ProductDTO) => {
@@ -22,7 +21,6 @@ export const mapToProductEntity = (entity: ProductEntity, dto: ProductDTO) => {
     entity.rating = dto.rating ?? 0;
     entity.brand = dto.brand ?? "";
     entity.thumbnail = dto.thumbnail ?? "";
-    entity.images = dto.images ?? [];
 };
 
 export const mapProductsToDTO = (products: Product[] | undefined): ProductDTO[] =>

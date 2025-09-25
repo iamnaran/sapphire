@@ -9,7 +9,6 @@ export interface Product {
     stock?: number;
     brand?: string;
     thumbnail?: string;
-    images?: string[];
 }
 
 export interface ProductResponse {

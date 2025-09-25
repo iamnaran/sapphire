@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { setAuthToken } from "../../api/apiClient";
-import { loginApi, logoutApi } from "@/src/api/services/authServices";
+import { setAuthToken } from "@/src/data/api/apiClient";
+import { loginApi, logoutApi } from "@/src/data/api/services/authServices";
 import {AuthState} from "@/src/store/auth/authState";
 import {LoginRequest} from "@/src/data/model/auth/loginRequest";
 import {deleteTokens, saveToken} from "@/src/store/secure/secureStore";

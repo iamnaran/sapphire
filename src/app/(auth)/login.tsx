@@ -12,7 +12,7 @@ import {
 import {SafeAreaView} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 import {useRouter} from "expo-router";
-import LoginButton from "@/src/components/loginButton";
+import LoginButton from "@/src/app/components/loginButton";
 
 export default function Login() {
 
@@ -59,7 +59,7 @@ export default function Login() {
             resizeMode="cover">
 
             <SafeAreaView className="flex-1  bg-transparent">
-                <ScrollView>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
 
                     <View className="flex-1 justify-center items-center mt-16 mx-6 my-4 px-6">
                         <Image
@@ -108,8 +108,8 @@ export default function Login() {
                             loading={isLoading}
                             onPress={handleLogin}
                             disabled={isLoggedIn}
+                            className={"h-10"}
                             text='Login'>
-
                         </LoginButton>
                     </View>
                 </ScrollView>
