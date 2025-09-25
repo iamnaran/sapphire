@@ -1,15 +1,13 @@
 import { useAuthStore } from "@/src/store/auth/authStore";
 import { View, Button } from "react-native";
-import { useRouter } from "expo-router";
-import { ROUTES } from "@/src/routes/routes";
+import {navigateToLogin} from "@/src/navigation/navigation";
 
 export default function Profile() {
     const { logoutAction } = useAuthStore();
-    const router = useRouter();
 
     const handleLogout = async () => {
         await logoutAction();
-        router.replace(ROUTES.AUTH.LOGIN);
+        navigateToLogin()
     };
 
     return (

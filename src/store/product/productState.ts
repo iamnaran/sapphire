@@ -4,5 +4,5 @@ export interface ProductState {
     products: ProductDTO[];
     loading: boolean;
     error?: string;
-    refresh: () => Promise<void>;
+    refresh: (isPullToRefresh?: boolean) => Promise<void>;
 }

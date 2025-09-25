@@ -11,14 +11,13 @@ import {
 } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
-import {useRouter} from "expo-router";
 import LoginButton from "@/src/app/components/loginButton";
+import {navigateToHome} from "@/src/navigation/navigation";
 
 export default function Login() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter();
     const passwordRef = useRef<TextInput>(null);
 
     const login = useAuthStore((state) => state.loginAction);
@@ -44,10 +43,9 @@ export default function Login() {
 
     useEffect(() => {
         if (isLoggedIn) {
-
-            router.replace("/(tabs)/home");
+            navigateToHome()
         }
-    }, [isLoggedIn, router]);
+    }, [isLoggedIn]);
 
 
     return (
@@ -77,6 +75,7 @@ export default function Login() {
                         <TextInput
                             placeholder="Username"
                             value={username}
+                            autoCapitalize={"none"}
                             onChangeText={setUsername}
                             keyboardType="email-address"
                             textContentType={"emailAddress"}
@@ -90,6 +89,7 @@ export default function Login() {
                             ref={passwordRef}
                             placeholder="Password"
                             value={password}
+                            autoCapitalize={"none"}
                             onChangeText={setPassword}
                             secureTextEntry
                             placeholderTextColor={"gray-100"}

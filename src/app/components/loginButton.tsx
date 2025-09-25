@@ -21,7 +21,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
             onPress={onPress}
             disabled={disabled || loading}
             className={`
-        w-full flex-row items-center justify-center rounded-xl p-4 
+        w-full min-h-[48px] flex-row items-center justify-center rounded-xl 
         ${disabled ? "bg-gray-400" : "bg-blue-600"} 
         ${className || ""}
       `}
@@ -29,7 +29,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
             {loading ? (
                 <ActivityIndicator color="white" />
             ) : (
-                <Text className="text-white text-lg font-semibold">{text}</Text>
+                <Text className="text-white text-lg font-semibold flex">{text}</Text>
             )}
         </Pressable>
     );
